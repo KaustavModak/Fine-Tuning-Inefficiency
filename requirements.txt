@@ -1,0 +1,12 @@
+torch>=2.0.0
+transformers>=4.40.0
+datasets>=2.18.0
+peft>=0.10.0
+evaluate>=0.4.0
+accelerate>=0.28.0
+adapter-transformers>=3.2.1
+
+numpy
+pandas
+tqdm
+scikit-learn
