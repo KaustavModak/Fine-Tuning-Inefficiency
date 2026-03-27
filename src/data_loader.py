@@ -17,14 +17,14 @@ def save_raw_data(dataset): #saves dataset locally
     os.makedirs(DATA_DIR,exist_ok=True)
     dataset.save_to_disk(DATA_DIR)
 
-def load_from_disk(): #loads dataset from your local folder
+def load_local_data(): #loads dataset from your local folder
     from datasets import load_from_disk
     return load_from_disk(DATA_DIR)
 
 if __name__=="__main__":
     #avoid re-downloading every time
     if os.path.exists(DATA_DIR):
-        dataset = load_from_disk(DATA_DIR)
+        dataset = load_local_data()
     else:
         dataset = load_squad_subset()
         save_raw_data(dataset)

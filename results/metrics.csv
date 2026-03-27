@@ -1,0 +1,4 @@
+Model,Accuracy,Training Time (sec),Trainable Params
+Baseline,0.09,5124.92,109000000
+LoRA,0.01,2174.67,294912
+Adapter,0.01,2245.16,18432

@@ -1,38 +1,31 @@
-# 🚀 BERT Efficient Fine-Tuning (LoRA & Adapters)
+# 🚀 Fine-Tuning Inefficiency: Parameter-Efficient BERT Training
 
 ## 📌 Overview
+This project explores the inefficiency of full fine-tuning in large language models like BERT and implements **parameter-efficient fine-tuning (PEFT)** methods to reduce computational cost while maintaining performance.
 
-This project explores **efficient fine-tuning techniques for BERT** on the **SQuAD Question Answering dataset**.
-
-Instead of training all parameters (which is computationally expensive), we compare:
-
-* ✅ Full Fine-Tuning (Baseline)
-* ⚡ LoRA (Low-Rank Adaptation)
-* 🔌 Adapter Layers
+We compare:
+- Full Fine-Tuning (Baseline BERT)
+- LoRA (Low-Rank Adaptation)
+- Adapter-based Fine-Tuning (IA3 using PEFT)
 
 ---
 
 ## 🎯 Objective
-
-> Reduce computational cost while maintaining performance.
-
-We evaluate:
-
-* Accuracy / F1 Score
-* Training Time
-* Number of Trainable Parameters
-* Model Size
+Full fine-tuning of BERT is computationally expensive due to training all parameters (~109M).  
+This project aims to:
+- Reduce trainable parameters
+- Reduce training time
+- Maintain comparable performance
 
 ---
 
 ## 📂 Project Structure
 
-```
 bert-efficient-ft/
 │
 ├── data/
-│   ├── raw/                  # Raw dataset (SQuAD subset)
-│   ├── processed/            # Tokenized dataset
+│   ├── raw/
+│   ├── processed/
 │
 ├── models/
 │   ├── baseline/
@@ -40,135 +33,127 @@ bert-efficient-ft/
 │   ├── adapter/
 │
 ├── src/
-│   ├── config.py
 │   ├── data_loader.py
 │   ├── preprocess.py
 │   ├── train_baseline.py
 │   ├── train_lora.py
 │   ├── train_adapter.py
-│   ├── evaluate.py
-│   ├── utils.py
 │
 ├── results/
 │   ├── metrics.csv
-│   ├── plots/
+│   ├── training_time.png
+│   ├── metrics.csv
+│   ├── trainable_params.png
 │
 ├── requirements.txt
 ├── README.md
-```
 
 ---
 
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/KaustavModak/Fine-Tuning-Inefficiency.git
-cd Fine-Tuning-Inefficiency
-```
+## 📊 Dataset
+- Dataset: **SQuAD (Stanford Question Answering Dataset)**
+- Subset used:
+  - Train: 1000 samples
+  - Validation: 200 samples
 
 ---
 
-### 2️⃣ Install Dependencies
+## ⚙️ Installation
 
-```bash
-pip install -r requirements.txt
-```
+git clone https://github.com/KaustavModak/Fine-Tuning-Inefficiency.git  
+cd Fine-Tuning-Inefficiency  
 
----
-
-### 3️⃣ Download Dataset
-
-```bash
-python src/data_loader.py
-```
+pip install -r requirements.txt  
 
 ---
 
-### 4️⃣ Preprocess Data
+## ▶️ How to Run
 
-```bash
-python src/preprocess.py
-```
+### 1. Load Data
+python src/data_loader.py  
 
----
+### 2. Preprocess Data
+python src/preprocess.py  
 
-## 🧠 Training
+### 3. Train Baseline Model
+python src/train_baseline.py  
 
-### 🔹 Baseline (Full Fine-Tuning)
+### 4. Train LoRA Model
+python src/train_lora.py  
 
-```bash
-python src/train_baseline.py
-```
-
----
-
-### 🔹 LoRA (Efficient Fine-Tuning)
-
-```bash
-python src/train_lora.py
-```
-
----
-
-### 🔹 Adapter Layers
-
-```bash
-python src/train_adapter.py
-```
-
----
-
-## 📊 Evaluation
-
-```bash
-python src/evaluate.py
-```
+### 5. Train Adapter Model (IA3)
+python src/train_adapter.py  
 
 ---
 
 ## 📈 Results
 
-| Model         | Accuracy | F1 Score | Training Time | Trainable Params |
-| ------------- | -------- | -------- | ------------- | ---------------- |
-| Baseline BERT | TBD      | TBD      | TBD           | ~110M            |
-| LoRA          | TBD      | TBD      | TBD           | ↓↓↓              |
-| Adapter       | TBD      | TBD      | TBD           | ↓↓↓              |
+| Model | Accuracy | Training Time (sec) | Trainable Params | % Trainable |
+|------|----------|--------------------|------------------|------------|
+| Baseline BERT | 0.09 | 5124.92 | 109M | 100% |
+| LoRA | ~0.01 | 2174.67 | 294,912 | 0.27% |
+| Adapter (IA3) | ~0.01 | 2245.16 | 18,432 | 0.0169% |
 
 ---
 
-## ⚡ Key Insights
+## 🔍 Key Insights
 
-* Full fine-tuning is expensive but performs best.
-* LoRA drastically reduces trainable parameters.
-* Adapters provide a balance between efficiency and performance.
+**Baseline BERT**
+- High computation cost
+- Slow training (~85 minutes)
+- Trains all parameters
+
+**LoRA**
+- ~2× faster training
+- Only 0.27% parameters updated
+- Efficient and scalable
+
+**Adapter (IA3)**
+- Most parameter-efficient
+- Only 0.0169% parameters trained
+- Suitable for low-resource environments
+
+---
+
+## 🧠 Conclusion
+
+Parameter-efficient methods like LoRA and Adapter-based fine-tuning significantly reduce computational cost while maintaining comparable performance.
+
+These methods are ideal for:
+- Low-resource environments
+- Faster experimentation
+- Scalable machine learning systems
 
 ---
 
 ## 🛠️ Tech Stack
 
-* Python
-* HuggingFace Transformers
-* Datasets
-* PyTorch
+- Python
+- Hugging Face Transformers
+- PEFT (LoRA, IA3)
+- Datasets Library
+- PyTorch
+- Matplotlib
 
 ---
 
-## 📌 Future Work
+## 📌 Future Improvements
 
-* Layer freezing strategies
-* Hybrid LoRA + Adapter models
-* Hyperparameter tuning
+- Train on full dataset
+- Use better evaluation metrics (F1 / Exact Match)
+- Hyperparameter tuning
+- GPU acceleration
 
 ---
 
 ## 👨‍💻 Author
 
-**Kaustav Modak**
+Kaustav Modak
 
 ---
 
-## ⭐ If you found this helpful
+## ⭐ Acknowledgements
 
-Give this repo a star ⭐
+- Hugging Face
+- SQuAD Dataset
+- Research work on LoRA & Adapter-based fine-tuning
