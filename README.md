@@ -42,7 +42,7 @@ bert-efficient-ft/
 ├── results/
 │   ├── metrics.csv
 │   ├── training_time.png
-│   ├── metrics.csv
+│   ├── plot_results.py
 │   ├── trainable_params.png
 │
 ├── requirements.txt
