@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 
-models = ["Baseline", "LoRA", "Adapter"]
+models = ["Baseline", "Attention", "LoRA", "Adapter"]
 
-training_time = [5124.92, 2174.67, 2245.16]  # seconds
-trainable_params = [109000000, 294912, 18432]
+training_time = [5124.92, 2068.53, 2174.67, 2245.16] # seconds
+
+trainable_params = [109000000, 28366848, 294912, 18432]
 
 plt.figure()
 plt.bar(models, training_time)
